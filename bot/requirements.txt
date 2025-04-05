@@ -1,0 +1,5 @@
+streamlit
+py-cord~=2.5.0
+psycopg2-binary
+colorama
+sqlalchemy

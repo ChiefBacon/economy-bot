@@ -1,0 +1,15 @@
+.venv/
+
+.idea/
+
+.vscode/
+
+.streamlit/
+
+db/
+
+*.sql
+*.db
+*.db.bak
+
+bot/config.ini
