@@ -1,6 +1,9 @@
 # app/Dockerfile
 
 FROM python:3.13-bookworm
+LABEL org.opencontainers.image.source="https://github.com/chiefbacon/economy-bot"
+LABEL org.opencontainers.image.description="Economy Bot for Discord"
+LABEL org.opencontainers.image.licenses="MIT"
 
 WORKDIR /bot
 
