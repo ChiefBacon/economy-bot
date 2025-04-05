@@ -40,4 +40,4 @@ Make any changes you see fit, then make a pull request from your fork. I will re
 If you have any questions or comments, feel free to open a discussion or issue.
 
 ## License
-This project is licensed under the [MIT license](LICENSE) and contians [third party packages](THIRD_PARTY.md).
+This project is licensed under the [MIT license](LICENSE) and contains [third party packages](THIRD_PARTY.md).
