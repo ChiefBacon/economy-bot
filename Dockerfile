@@ -2,7 +2,7 @@
 
 FROM python:3.13-bookworm
 LABEL org.opencontainers.image.source="https://github.com/chiefbacon/economy-bot"
-LABEL org.opencontainers.image.description="Economy Bot for Discord"
+LABEL org.opencontainers.image.description="Simple Economy Bot for Discord"
 LABEL org.opencontainers.image.licenses="MIT"
 
 WORKDIR /bot
@@ -17,6 +17,6 @@ RUN pip3 install -r requirements.txt
 
 # Copy LICENSE and NOTICE into the image
 COPY LICENSE /bot/LICENSE
-COPY THIRD_PARTY_LICENSES.md /bot/THIRD_PARTY_LICENSES.md
+COPY THIRD_PARTY.md /bot/THIRD_PARTY.md
 
 ENTRYPOINT ["python3", "economyBot.py"]
