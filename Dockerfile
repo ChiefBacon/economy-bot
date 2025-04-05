@@ -12,4 +12,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -r requirements.txt
 
+# Copy LICENSE and NOTICE into the image
+COPY LICENSE /bot/LICENSE
+COPY THIRD_PARTY_LICENSES.md /bot/THIRD_PARTY_LICENSES.md
+
 ENTRYPOINT ["python3", "economyBot.py"]

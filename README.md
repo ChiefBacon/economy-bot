@@ -13,3 +13,6 @@ A simple economy bot for discord
 
 ## How to contribute
 Make any changes you see fit, then make a pull request from your fork. I will review your changes and accept them if everything seems ok.
+
+## License
+This project is licensed under the [MIT license](LICENSE) and contians [third party packages](THIRD_PARTY.md).
