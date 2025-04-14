@@ -15,7 +15,7 @@ logging.basicConfig(format=fmt)
 log = logging.getLogger('economy-bot')
 log.setLevel(logging.DEBUG)
 
-config.read('config.ini')
+config.read('config/config.ini')
 
 token = config['Discord']['token']
 admin_id = config['Discord']['admin_id']

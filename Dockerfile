@@ -1,6 +1,6 @@
 # app/Dockerfile
 
-FROM python:3.13-bookworm
+FROM python:3.13-alpine
 LABEL org.opencontainers.image.source="https://github.com/chiefbacon/economy-bot"
 LABEL org.opencontainers.image.description="Simple Economy Bot for Discord"
 LABEL org.opencontainers.image.licenses="MIT"
@@ -8,6 +8,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 WORKDIR /bot
 
 COPY bot/ /bot/
+COPY requirements.txt /bot/requirements.txt
 
 RUN apt-get update && apt-get install -y \
     build-essential \
