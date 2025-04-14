@@ -7,17 +7,16 @@ LABEL org.opencontainers.image.licenses="MIT"
 
 WORKDIR /bot
 
+# Copy files to the image
 COPY bot/ /bot/
 COPY requirements.txt /bot/requirements.txt
+COPY LICENSE /bot/LICENSE
+COPY THIRD_PARTY.md /bot/THIRD_PARTY.md
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
+RUN apk update && apk add \
+    build-base \
     curl
 
 RUN pip3 install -r requirements.txt
-
-# Copy LICENSE and NOTICE into the image
-COPY LICENSE /bot/LICENSE
-COPY THIRD_PARTY.md /bot/THIRD_PARTY.md
 
 ENTRYPOINT ["python3", "economyBot.py"]
