@@ -4,12 +4,13 @@ A simple economy bot for discord
 ## Issues to be resolved/documented
 - [ ] Low customizability
 - [ ] Admin user is set in config file, not retreived from the database
-- [ ] No example config file
-- [ ] No Docker images published
+- [x] No example config file
+- [x] No Docker images published
 - [ ] Web UI is incomplete and unstable
 - [ ] The items for the shop are hardcoded, not retreived from the database
 - [ ] No documentation
 - [ ] Likely unstable
+- [ ] No unit testing available
 
 ## Docker Images
 Docker images are available. You can find an example of a `docker-compose.yml` file below
