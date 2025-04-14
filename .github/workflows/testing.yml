@@ -23,5 +23,4 @@ jobs:
         with:
           context: .
           push: false
-          tags: ghcr.io/chiefbacon/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: testing
