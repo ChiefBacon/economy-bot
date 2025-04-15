@@ -1,6 +1,6 @@
 # app/Dockerfile
 
-FROM python:3.13-alpine
+FROM python:3.13-bookworm
 LABEL org.opencontainers.image.source="https://github.com/chiefbacon/economy-bot"
 LABEL org.opencontainers.image.description="Simple Economy Bot for Discord"
 LABEL org.opencontainers.image.licenses="MIT"
@@ -13,10 +13,8 @@ COPY requirements.txt /bot/requirements.txt
 COPY LICENSE /bot/LICENSE
 COPY THIRD_PARTY.md /bot/THIRD_PARTY.md
 
-RUN apk update && apk add \
-    build-base \
-    cmake \
-    make \
+RUN apt-get update && apt-get install -y \
+    build-essential \
     curl
 
 RUN pip3 install -r requirements.txt
