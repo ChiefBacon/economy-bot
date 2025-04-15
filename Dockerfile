@@ -15,6 +15,8 @@ COPY THIRD_PARTY.md /bot/THIRD_PARTY.md
 
 RUN apk update && apk add \
     build-base \
+    cmake \
+    make \
     curl
 
 RUN pip3 install -r requirements.txt
