@@ -57,7 +57,7 @@ files = ['/home/pi/economyBot/images/cat.png', '/home/pi/economyBot/images/camer
 
 yesorno = [True, False]
 
-dice = [1,2,3,4,5,6]
+dice = [1, 2, 3, 4, 5, 6]
 
 # Define Arcade Embed
 arcadeEmbed = discord.Embed(title="Arcade", description="Welcome to the arcade!", color=0xffcc00)
@@ -82,7 +82,7 @@ def commit_changes():
     # save db changes
     connection.commit()
     log.info('[✓] Backup Successful')
-    
+
 
 def get_user_data(discord_id):
     # Will return list in form [discord id, username, balance] if the user exists and None if the user doesn't
@@ -90,7 +90,7 @@ def get_user_data(discord_id):
     return crsr.fetchone()
 
 
-def set_user_money(discord_id, new_balance:float):
+def set_user_money(discord_id, new_balance: float):
     crsr.execute('UPDATE Users SET Balance = %s WHERE DiscordID=%s;', [new_balance, str(discord_id)])
 
 
