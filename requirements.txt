@@ -3,3 +3,4 @@ py-cord~=2.5.0
 psycopg2-binary
 colorama
 sqlalchemy
+audioop-lts; python_version>='3.13' 
