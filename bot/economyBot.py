@@ -227,7 +227,7 @@ async def bal(ctx):
     userdata = get_user_data(str(ctx.author.id))
     log.debug(userdata)
     if userdata is not None:
-        await ctx.respond((f'You have {str(userdata[2])}:coin:'), ephemeral=True)
+        await ctx.respond((f'You have {userdata[2]}:coin:'), ephemeral=True)
 
 
 @client.command(description="Set your web login password")
@@ -324,8 +324,8 @@ async def adduser(ctx, user: discord.Option(discord.Member)):
     user_to_add = user.id
     userdata = get_user_data(user_to_add)
     if userdata is None:
-        add_user(user_to_add, str(user), 50)
-        log_transaction(ctx.author.id, 0, 50, f"New User {str(user)} added to system")
+        add_user(user_to_add, str(user.name), 50)
+        log_transaction(ctx.author.id, 0, 50, f"New User {str(user.name)} added to system")
         await ctx.respond(f':white_check_mark: Success! Added User <@!{str(user_to_add)}>', ephemeral=True)
         log.info(f'[✓] User {str(user_to_add)} Added')
         commit_changes()
@@ -395,7 +395,7 @@ async def send(ctx, amount: discord.Option(float), user: discord.Option(discord.
         else:
             transfer = transfer_money(userdata, recipient_data, amount_to_send)
             if transfer:
-                await ctx.respond(':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
+                await ctx.respond(f':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
                 log.info(f'[+] User {ctx.author.name} sent {str(amount_to_send)} to {str(id_to_send_to)}')
             else:
                 await ctx.respond(':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
