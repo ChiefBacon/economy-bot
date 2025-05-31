@@ -22,7 +22,7 @@ admin_id = config['Discord']['admin_id']
 
 args = sys.argv
 
-connection = psycopg2.connect(database=config["Database"]["name"], host=config["Database"]["host"], user=config["Database"]["user"], password=config["Database"]["password"], port=config["Database"]["port"])
+connection = psycopg2.connect(database=config["Database"]["name"], host=config["Database"]["host"], user=config["Database"]["user"], password=config["Database"]["password"], port=config.getint("Database", "port"))
 
 crsr = connection.cursor()
 
@@ -141,9 +141,9 @@ async def on_ready():
     log.info(f'[✓] Bot connected to discord as {client.user.name}')
 
 
-#@client.command(description="Get help with the bot")
-#async def help(ctx):
-    #await ctx.respond(embed=helpEmbed, ephemeral=True)
+# @client.command(description="Get help with the bot")
+# async def help(ctx):
+    # await ctx.respond(embed=helpEmbed, ephemeral=True)
 
 
 @client.command(description="Get info about the bot")
@@ -161,12 +161,12 @@ async def roll(ctx):
     userdata = get_user_data(str(ctx.author.id))
     if userdata is not None:
         if userdata[2] >= 10:
-            set_user_money(userdata[0], (userdata[2]-10))
+            set_user_money(userdata[0], (userdata[2] - 10))
             log_transaction(userdata[0], 'system', 10, "Dice Roll Game Purchase")
             commit_changes()
             dice_roll = random.choice(dice)
             if dice_roll == 5:
-                set_user_money(userdata[0], (userdata[2]+50))
+                set_user_money(userdata[0], (userdata[2] + 50))
                 log_transaction('system', userdata[0], 50, "Dice Roll Game Reward")
                 await ctx.respond(':tada: You Won!')
                 commit_changes()
@@ -220,14 +220,14 @@ async def buy(ctx, item: discord.Option(str)):
                 log.info(f"[-] {ctx.author.name} purchased cool role (who would do that?){Fore.RESET}")
             else:
                 await ctx.respond(':negative_squared_cross_mark: You do not have enough money!', ephemeral=True)
-            
+
 
 @client.command(description="See your current balance")
 async def bal(ctx):
     userdata = get_user_data(str(ctx.author.id))
     log.debug(userdata)
     if userdata is not None:
-        await ctx.respond(('You have '+str(userdata[2])+':coin:'), ephemeral=True)
+        await ctx.respond((f'You have {str(userdata[2])}:coin:'), ephemeral=True)
 
 
 @client.command(description="Set your web login password")
@@ -269,7 +269,7 @@ async def invest(ctx, amount: discord.Option(float)):
             else:
                 await ctx.respond(':chart_with_downwards_trend: The stonks have gone down!')
                 set_user_money(ctx.author.id, (userdata[2] + (invest_amount / 4)))
-                log_transaction(0, userdata[0], invest_amount/4, "Investment return")
+                log_transaction(0, userdata[0], invest_amount / 4, "Investment return")
                 log.info(f'[-] {ctx.author.name} invested {str(invest_amount)} and got a return of {str(invest_amount / 4)}')
                 commit_changes()
         else:
@@ -313,7 +313,7 @@ async def offline(ctx):
     if userdata[3]:
         await client.change_presence(status=discord.Status.offline)
         await ctx.respond(':white_check_mark: Changing status to offline', ephemeral=True)
-        log.warning('[✓] Changing to offline')            
+        log.warning('[✓] Changing to offline')
     else:
         await ctx.respond(":negative_squared_cross_mark: You do not have permission to use this command!", ephemeral=True)
         log.warning(f'[!] {ctx.author.name} tried to offline bot')
@@ -388,16 +388,16 @@ async def send(ctx, amount: discord.Option(float), user: discord.Option(discord.
                 await ctx.respond(f':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
                 log.info(f'[+] User {ctx.author.name} sent {str(amount_to_send)} to {str(id_to_send_to)}')
             else:
-                await ctx.respond(f':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
+                await ctx.respond(':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
         elif amount_to_send < 0:
             await ctx.respond(':negative_squared_cross_mark: That is a negative number!', ephemeral=True)
             log.warning(f'[!] User {ctx.author.name} tried to send negative money')
         else:
             transfer = transfer_money(userdata, recipient_data, amount_to_send)
             if transfer:
-                await ctx.respond(f':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
+                await ctx.respond(':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
                 log.info(f'[+] User {ctx.author.name} sent {str(amount_to_send)} to {str(id_to_send_to)}')
             else:
-                await ctx.respond(f':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
+                await ctx.respond(':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
 
 client.run(token)
