@@ -57,6 +57,8 @@ files = ['/home/pi/economyBot/images/cat.png', '/home/pi/economyBot/images/camer
 
 yesorno = [True, False]
 
+one_in_three = [1, 2, 3]
+
 dice = [1, 2, 3, 4, 5, 6]
 
 # Define Arcade Embed
@@ -227,7 +229,7 @@ async def bal(ctx):
     userdata = get_user_data(str(ctx.author.id))
     log.debug(userdata)
     if userdata is not None:
-        await ctx.respond((f'You have {str(userdata[2])}:coin:'), ephemeral=True)
+        await ctx.respond((f'You have {userdata[2]}:coin:'), ephemeral=True)
 
 
 @client.command(description="Set your web login password")
@@ -260,17 +262,16 @@ async def invest(ctx, amount: discord.Option(float)):
         if userdata[2] >= invest_amount:
             set_user_money(ctx.author.id, userdata[2] - invest_amount)
             log_transaction(userdata[0], 0, invest_amount, "Investment purchase")
-            if random.choice(yesorno):
+            if random.choice(one_in_three) == 1:
                 await ctx.respond(':chart_with_upwards_trend: The stonks have gone up!')
-                set_user_money(ctx.author.id, (userdata[2] + (invest_amount * 4)))
-                log.info(f'[+] {ctx.author.name} invested {str(invest_amount)} and got a return of {str(invest_amount * 4)}')
-                log_transaction(0, userdata[0], invest_amount * 4, "Investment return")
+                investment_return = invest_amount * 2
+                set_user_money(ctx.author.id, (userdata[2] + (investment_return)))
+                log.info(f'[+] {ctx.author.name} invested {invest_amount} and got a return of {investment_return}')
+                log_transaction(0, userdata[0], investment_return, "Investment return")
                 commit_changes()
             else:
                 await ctx.respond(':chart_with_downwards_trend: The stonks have gone down!')
-                set_user_money(ctx.author.id, (userdata[2] + (invest_amount / 4)))
-                log_transaction(0, userdata[0], invest_amount / 4, "Investment return")
-                log.info(f'[-] {ctx.author.name} invested {str(invest_amount)} and got a return of {str(invest_amount / 4)}')
+                log.info(f'[-] {ctx.author.name} invested {str(invest_amount)} and got a return of 0')
                 commit_changes()
         else:
             await ctx.respond(':negative_squared_cross_mark: You do not have enough money!', ephemeral=True)
@@ -324,8 +325,8 @@ async def adduser(ctx, user: discord.Option(discord.Member)):
     user_to_add = user.id
     userdata = get_user_data(user_to_add)
     if userdata is None:
-        add_user(user_to_add, str(user), 50)
-        log_transaction(ctx.author.id, 0, 50, f"New User {str(user)} added to system")
+        add_user(user_to_add, str(user.name), 50)
+        log_transaction(ctx.author.id, 0, 50, f"New User {str(user.name)} added to system")
         await ctx.respond(f':white_check_mark: Success! Added User <@!{str(user_to_add)}>', ephemeral=True)
         log.info(f'[✓] User {str(user_to_add)} Added')
         commit_changes()
@@ -395,7 +396,7 @@ async def send(ctx, amount: discord.Option(float), user: discord.Option(discord.
         else:
             transfer = transfer_money(userdata, recipient_data, amount_to_send)
             if transfer:
-                await ctx.respond(':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
+                await ctx.respond(f':white_check_mark: Sent {str(amount_to_send)}:coin: to <@!{str(id_to_send_to)}>')
                 log.info(f'[+] User {ctx.author.name} sent {str(amount_to_send)} to {str(id_to_send_to)}')
             else:
                 await ctx.respond(':negative_squared_cross_mark: You do not have enough!', ephemeral=True)
