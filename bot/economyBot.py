@@ -257,6 +257,9 @@ async def add(ctx, amount: discord.Option(float)):
 @client.command(description="Invest in the S T O N K S")
 async def invest(ctx, amount: discord.Option(float)):
     invest_amount = amount
+    if invest_amount < 1:
+        await ctx.respond(':negative_squared_cross_mark: You cannot invest less than 1 coin!', ephemeral=True)
+        return
     userdata = get_user_data(str(ctx.author.id))
     if userdata is not None:
         if userdata[2] >= invest_amount:
